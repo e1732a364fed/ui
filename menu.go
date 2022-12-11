@@ -110,10 +110,10 @@ func (i *MenuItem) OnClicked(f func(*MenuItem, *Window)) {
 //export doMenuItemOnClicked
 func doMenuItemOnClicked(i *C.uiMenuItem, w *C.uiWindow, data unsafe.Pointer) {
 	ii := menuItems[i]
-	ww := windows[w]
+	//ww := windows[w]
 
 	if ii.onClicked != nil {
-		ii.onClicked(ii, ww)
+		ii.onClicked(ii, nil)
 	}
 }
 
