@@ -164,9 +164,9 @@ func (t *Table) OnRowClicked(f func(*Table, int)) {
 }
 
 //export pkguiDoTableOnRowClicked
-func pkguiDoTableOnRowClicked(cc *C.uiTable, row int, data unsafe.Pointer) {
+func pkguiDoTableOnRowClicked(cc *C.uiTable, row C.int, data unsafe.Pointer) {
 	c := ControlFromLibui(uintptr(unsafe.Pointer(cc))).(*Table)
 	if c.onClicked != nil {
-		c.onClicked(c, row)
+		c.onClicked(c, int(row))
 	}
 }
