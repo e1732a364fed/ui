@@ -14,6 +14,15 @@ func MsgBoxError(w *Window, title string, description string) {
 	C.uiMsgBoxError(w.w, ctitle, cdescription)
 }
 
+func OpenFolder(w *Window) string {
+	cname := C.uiOpenFolder(w.w)
+	if cname == nil {
+		return ""
+	}
+	defer C.uiFreeText(cname)
+	return C.GoString(cname)
+}
+
 func OpenFile(w *Window) string {
 	cname := C.uiOpenFile(w.w)
 	if cname == nil {
