@@ -171,6 +171,15 @@ func (t *Table) SetHeaderVisible(visible bool) {
 	C.uiTableHeaderSetVisible(t.t, frombool(visible))
 }
 
+func (t *Table) HeaderSortIndicator(column int) uint {
+	return uint(C.uiTableHeaderSortIndicator(t.t, C.int(column)))
+}
+
+// 0: none, 1: ascending, 2: decending
+func (t *Table) SetHeaderSortIndicator(column int, indicator uint) {
+	C.uiTableHeaderSetSortIndicator(t.t, C.int(column), C.uint(indicator))
+}
+
 func (t *Table) OnRowClicked(f func(*Table, int)) {
 
 	t.onClicked = f
