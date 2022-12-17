@@ -1,4 +1,15 @@
-# ui: platform-native GUI library for Go
+# ui: continued on andlabs's ui
+
+new feature since andlabs:
+
+Menu support, from https://github.com/Nv7-GitHub/ui
+
+darwin darkmode on multilineEntry
+Table.OnRowClicked
+My customized fix for libui-ng on windows and darwin, see commit history for details.
+
+
+# Old Desc: ui: platform-native GUI library for Go
 
 This is a library that aims to provide simple GUI software development in Go. It is based on my [libui](https://github.com/andlabs/libui), a simple cross-platform library that does the same thing, but written in C.
 

@@ -67,8 +67,9 @@ func (p *TableParams) toLibui() *C.uiTableParams {
 // manipulate rows of such data at a time.
 type Table struct {
 	ControlBase
-	t         *C.uiTable
-	onClicked func(*Table, int)
+	t               *C.uiTable
+	onClicked       func(*Table, int)
+	onDoubleClicked func(*Table, int)
 }
 
 // NewTable creates a new Table with the specified parameters.
@@ -78,6 +79,7 @@ func NewTable(p *TableParams) *Table {
 	cp := p.toLibui()
 	t.t = C.uiNewTable(cp)
 	C.pkguiTableRowOnClicked(t.t)
+	C.pkguiTableRowOnDoubleClicked(t.t)
 	C.pkguiFreeTableParams(cp)
 
 	t.ControlBase = NewControlBase(t, uintptr(unsafe.Pointer(t.t)))
@@ -163,10 +165,23 @@ func (t *Table) OnRowClicked(f func(*Table, int)) {
 	t.onClicked = f
 }
 
+func (t *Table) OnRowDoubleClicked(f func(*Table, int)) {
+
+	t.onDoubleClicked = f
+}
+
 //export pkguiDoTableOnRowClicked
 func pkguiDoTableOnRowClicked(cc *C.uiTable, row C.int, data unsafe.Pointer) {
 	c := ControlFromLibui(uintptr(unsafe.Pointer(cc))).(*Table)
 	if c.onClicked != nil {
 		c.onClicked(c, int(row))
+	}
+}
+
+//export pkguiDoTableOnRowDoubleClicked
+func pkguiDoTableOnRowDoubleClicked(cc *C.uiTable, row C.int, data unsafe.Pointer) {
+	c := ControlFromLibui(uintptr(unsafe.Pointer(cc))).(*Table)
+	if c.onDoubleClicked != nil {
+		c.onDoubleClicked(c, int(row))
 	}
 }

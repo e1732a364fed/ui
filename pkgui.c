@@ -263,3 +263,8 @@ void pkguiTableRowOnClicked(uiTable *c)
 {
 	uiTableOnRowClicked(c, pkguiDoTableOnRowClicked, NULL);
 }
+
+void pkguiTableRowOnDoubleClicked(uiTable *c)
+{
+	uiTableOnRowDoubleClicked(c, pkguiDoTableOnRowDoubleClicked, NULL);
+}
