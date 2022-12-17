@@ -14,8 +14,8 @@ import "C"
 // users can type values into, see EditableCombobox.
 type Combobox struct {
 	ControlBase
-	c	*C.uiCombobox
-	onSelected		func(*Combobox)
+	c          *C.uiCombobox
+	onSelected func(*Combobox)
 }
 
 // NewCombobox creates a new Combobox.
@@ -61,4 +61,18 @@ func pkguiDoComboboxOnSelected(cc *C.uiCombobox, data unsafe.Pointer) {
 	if c.onSelected != nil {
 		c.onSelected(c)
 	}
+}
+
+func (c *Combobox) Clear() {
+	C.uiComboboxClear(c.c)
+}
+
+func (c *Combobox) Delete(column int) {
+	C.uiComboboxDelete(c.c, C.int(column))
+}
+
+func (c *Combobox) InsertAt(text string, column int) {
+	ctext := C.CString(text)
+	C.uiComboboxInsertAt(c.c, C.int(column), ctext)
+	freestr(ctext)
 }
