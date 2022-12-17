@@ -258,3 +258,8 @@ void pkguiFreeTableParams(uiTableParams *p)
 {
 	free(p);
 }
+
+void pkguiTableRowOnClicked(uiTable *c)
+{
+	uiTableOnRowClicked(c, pkguiDoTableOnRowClicked, NULL);
+}

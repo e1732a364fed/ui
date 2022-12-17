@@ -15,7 +15,7 @@ import "C"
 // functions; if used, that jparticular Table colum is not editable
 // by the user and always editable by the user, respectively.
 const (
-	TableModelColumnNeverEditable = -1
+	TableModelColumnNeverEditable  = -1
 	TableModelColumnAlwaysEditable = -2
 )
 
@@ -28,7 +28,7 @@ type TableTextColumnOptionalParams struct {
 	//
 	// If CellValue for this column for any cell returns nil, that
 	// cell will also use the default text color.
-	ColorModelColumn		int
+	ColorModelColumn int
 }
 
 func (p *TableTextColumnOptionalParams) toLibui() *C.uiTableTextColumnOptionalParams {
@@ -44,7 +44,7 @@ func (p *TableTextColumnOptionalParams) toLibui() *C.uiTableTextColumnOptionalPa
 type TableParams struct {
 	// Model is the TableModel to use for this uiTable.
 	// This parameter cannot be nil.
-	Model		*TableModel
+	Model *TableModel
 
 	// RowBackgroundColorModelColumn is a model column
 	// number that defines the background color used for the
@@ -53,7 +53,7 @@ type TableParams struct {
 	//
 	// If CellValue for this column for any row returns NULL, that
 	// row will also use the default background color.
-	RowBackgroundColorModelColumn		int
+	RowBackgroundColorModelColumn int
 }
 
 func (p *TableParams) toLibui() *C.uiTableParams {
@@ -67,7 +67,8 @@ func (p *TableParams) toLibui() *C.uiTableParams {
 // manipulate rows of such data at a time.
 type Table struct {
 	ControlBase
-	t	*C.uiTable
+	t         *C.uiTable
+	onClicked func(*Table, int)
 }
 
 // NewTable creates a new Table with the specified parameters.
@@ -76,6 +77,7 @@ func NewTable(p *TableParams) *Table {
 
 	cp := p.toLibui()
 	t.t = C.uiNewTable(cp)
+	C.pkguiTableRowOnClicked(t.t)
 	C.pkguiFreeTableParams(cp)
 
 	t.ControlBase = NewControlBase(t, uintptr(unsafe.Pointer(t.t)))
@@ -154,4 +156,17 @@ func (t *Table) AppendButtonColumn(name string, buttonModelColumn int, buttonCli
 	cname := C.CString(name)
 	defer freestr(cname)
 	C.uiTableAppendButtonColumn(t.t, cname, C.int(buttonModelColumn), C.int(buttonClickableModelColumn))
+}
+
+func (t *Table) OnRowClicked(f func(*Table, int)) {
+
+	t.onClicked = f
+}
+
+//export pkguiDoTableOnRowClicked
+func pkguiDoTableOnRowClicked(cc *C.uiTable, row int, data unsafe.Pointer) {
+	c := ControlFromLibui(uintptr(unsafe.Pointer(cc))).(*Table)
+	if c.onClicked != nil {
+		c.onClicked(c, row)
+	}
 }

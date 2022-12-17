@@ -97,5 +97,6 @@ extern uiTableTextColumnOptionalParams *pkguiAllocTableTextColumnOptionalParams(
 extern void pkguiFreeTableTextColumnOptionalParams(uiTableTextColumnOptionalParams *p);
 extern uiTableParams *pkguiAllocTableParams(void);
 extern void pkguiFreeTableParams(uiTableParams *p);
+extern void pkguiTableRowOnClicked(uiTable *t);
 
 #endif
