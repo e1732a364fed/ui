@@ -99,5 +99,6 @@ extern uiTableParams *pkguiAllocTableParams(void);
 extern void pkguiFreeTableParams(uiTableParams *p);
 extern void pkguiTableRowOnClicked(uiTable *t);
 extern void pkguiTableRowOnDoubleClicked(uiTable *t);
+extern void pkguiTableHeaderOnClicked(uiTable *t);
 
 #endif

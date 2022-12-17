@@ -70,6 +70,7 @@ type Table struct {
 	t               *C.uiTable
 	onClicked       func(*Table, int)
 	onDoubleClicked func(*Table, int)
+	onHeaderClicked func(*Table, int)
 }
 
 // NewTable creates a new Table with the specified parameters.
@@ -80,6 +81,7 @@ func NewTable(p *TableParams) *Table {
 	t.t = C.uiNewTable(cp)
 	C.pkguiTableRowOnClicked(t.t)
 	C.pkguiTableRowOnDoubleClicked(t.t)
+	C.pkguiTableHeaderOnClicked(t.t)
 	C.pkguiFreeTableParams(cp)
 
 	t.ControlBase = NewControlBase(t, uintptr(unsafe.Pointer(t.t)))
@@ -170,6 +172,11 @@ func (t *Table) OnRowDoubleClicked(f func(*Table, int)) {
 	t.onDoubleClicked = f
 }
 
+func (t *Table) OnHeaderClicked(f func(*Table, int)) {
+
+	t.onHeaderClicked = f
+}
+
 //export pkguiDoTableOnRowClicked
 func pkguiDoTableOnRowClicked(cc *C.uiTable, row C.int, data unsafe.Pointer) {
 	c := ControlFromLibui(uintptr(unsafe.Pointer(cc))).(*Table)
@@ -183,5 +190,13 @@ func pkguiDoTableOnRowDoubleClicked(cc *C.uiTable, row C.int, data unsafe.Pointe
 	c := ControlFromLibui(uintptr(unsafe.Pointer(cc))).(*Table)
 	if c.onDoubleClicked != nil {
 		c.onDoubleClicked(c, int(row))
+	}
+}
+
+//export pkguiDoTableOnHeaderClicked
+func pkguiDoTableOnHeaderClicked(cc *C.uiTable, row C.int, data unsafe.Pointer) {
+	c := ControlFromLibui(uintptr(unsafe.Pointer(cc))).(*Table)
+	if c.onHeaderClicked != nil {
+		c.onHeaderClicked(c, int(row))
 	}
 }

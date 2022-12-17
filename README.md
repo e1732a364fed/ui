@@ -1,13 +1,18 @@
-# ui: continued on andlabs's ui
+# ui: a go binding for libui-ng
+
+a go binding for [libui-ng](https://github.com/libui-ng/libui-ng), continued on as a fork of [andlabs/ui](https://github.com/andlabs/ui)
+
 
 new feature since andlabs:
 
 Menu support, from https://github.com/Nv7-GitHub/ui
 
 darwin darkmode on multilineEntry
-Table.OnRowClicked
+Table.OnRowClicked, OnRowDoubleClicked
 My customized fix for libui-ng on windows and darwin, see commit history for details.
 
+
+it forks [czkoko/ui](github.com/czkoko/ui) which forks andlabs/ui because it was the most updated fork.
 
 # Old Desc: ui: platform-native GUI library for Go
 
