@@ -180,6 +180,14 @@ func (t *Table) SetHeaderSortIndicator(column int, indicator uint) {
 	C.uiTableHeaderSetSortIndicator(t.t, C.int(column), C.uint(indicator))
 }
 
+func (t *Table) ColumnWidth(column int) int {
+	return int(C.uiTableColumnWidth(t.t, C.int(column)))
+}
+
+func (t *Table) SetColumnWidth(column int, w int) {
+	C.uiTableColumnSetWidth(t.t, C.int(column), C.int(w))
+}
+
 func (t *Table) OnRowClicked(f func(*Table, int)) {
 
 	t.onClicked = f
