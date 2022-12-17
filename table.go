@@ -162,6 +162,15 @@ func (t *Table) AppendButtonColumn(name string, buttonModelColumn int, buttonCli
 	C.uiTableAppendButtonColumn(t.t, cname, C.int(buttonModelColumn), C.int(buttonClickableModelColumn))
 }
 
+// HeaderVisible returns whether the Table's header is visible.
+func (t *Table) HeaderVisible() bool {
+	return tobool(C.uiTableHeaderVisible(t.t))
+}
+
+func (t *Table) SetHeaderVisible(visible bool) {
+	C.uiTableHeaderSetVisible(t.t, frombool(visible))
+}
+
 func (t *Table) OnRowClicked(f func(*Table, int)) {
 
 	t.onClicked = f
