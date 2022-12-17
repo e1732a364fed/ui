@@ -9,9 +9,11 @@ Menu support, from https://github.com/Nv7-GitHub/ui
 
 darwin darkmode on multilineEntry
 
+OpenFolder
+
 Table.OnRowClicked, OnRowDoubleClicked, OnHeaderClicked, HeaderVisible, SetHeaderVisible, HeaderSortIndicator, SetHeaderSortIndicator, ColumnWidth, SetColumnWidth
 
-Combobox.Clear, Delete, InsertAt
+Combobox.Clear, Delete, InsertAt, NumItems
 
 My customized fix for libui-ng on windows and darwin, see commit history for details.
 

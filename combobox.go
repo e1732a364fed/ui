@@ -76,3 +76,7 @@ func (c *Combobox) InsertAt(text string, column int) {
 	C.uiComboboxInsertAt(c.c, C.int(column), ctext)
 	freestr(ctext)
 }
+
+func (c *Combobox) NumItems() int {
+	return int(C.uiComboboxNumItems(c.c))
+}
