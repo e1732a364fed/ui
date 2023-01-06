@@ -17,6 +17,8 @@ Combobox.Clear, Delete, InsertAt, NumItems
 
 My customized fix for libui-ng on windows and darwin, see commit history for details.
 
+(later versions removed windows fix, for better refresh performance, choose whatever version that fits your needs)
+
 
 it forks [czkoko/ui](github.com/czkoko/ui) which forks andlabs/ui because it was the most updated fork.
 
